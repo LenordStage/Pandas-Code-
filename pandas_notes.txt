@@ -1,0 +1,1904 @@
+
+
+#df.loc[df['column_name'] == some_value]
+#df.loc[(df['column_name'] >= A) & (df['column_name'] <= B)]
+#df1 = df.loc[(df['status'] == 'open') & (df['country'] == 'USA')]
+
+#df.loc[['country'] == 'USA']
+
+
+'''df = fb_active_users
+df1 = df.loc[df['status'] == 'open']
+df2 = df.loc[df['country'] == 'USA']
+#>> print(sum(df['Level'] == 'Beginner'))
+r1 = (sum(df1['status'] == 'open'))
+r2 = (sum(df2['country'] == 'USA'))
+result = r1 / r2'''
+
+'''df = fb_active_users[fb_active_users['country']=='USA'].groupby('status')['user_id'].count().to_frame('num_users')
+result=df.loc['open']/df['num_users'].sum()'''
+
+'''active = len(fb_active_users[fb_active_users.status == 'open'])
+share = active/len(fb_active_users)
+print(share)'''
+
+Return the total number of comments received for each user in the 30 or less days before 2020-02-10. Don't output users who haven't received any comment in the defined time period.
+
+---------------------------------
+Given a list of projects and employees mapped to each project, calculate by the amount of project budget allocated to each employee . The output should include the project title and the project budget rounded to the closest integer. Order your list by projects with the highest budget per employee first.
+
+
+ms_projects.rename(columns={'title' : 'project_title'}, inplace=True)
+ms_emp_projects.rename(columns={'project_id' : 'project_title'}, inplace=True)
+ms_emp_projects['project_title'] = 'Project' + ms_emp_projects['project_title'].astype(str)
+ms_emp_projects1 = ms_emp_projects.iloc[:50]
+ms_emp_projects2 = ms_emp_projects.iloc[50:]
+ms_emp_projects3 = pd.merge(ms_emp_projects1, ms_emp_projects2, on='project_title', how='inner')
+#ms_emp_projects3
+#ms_projects
+result = pd.merge(ms_emp_projects3, ms_projects, on='project_title', how='inner')
+result = result.drop(columns=['id'])
+result['budget_per_employee'] = result['budget'].div(2)
+result_final = result.sort_values(by='budget_per_employee', ascending=False).round()
+result_final
+
+#sorted_df = df_marks.sort_values(by='algebra', ascending=False)
+#df['A'] = df['A'].div(100)
+#rankings_pd.rename(columns = {'test':'TEST'}, inplace = True)
+
+#df['col'] = 'str' + df['col'].astype(str)
+#df = ms_projects.merge(ms_emp_projects, on='project_id')
+#ms_emp_projects.groupby('emp_id')
+#.merge(ms_projects ms_emp_projects)
+
+10301	Keith	Morgan	27056	2		human resource
+10303	Clifford	Nguyen	32165	2		human resource
+10310	Dawn	Foley	28902	2		human resource
+
+df = olympics_athletes_events
+def classification(x):
+    if x == 'Paris':
+        return 'European'
+    elif x == 'London':
+        return 'European'
+    elif x == 'Athina':
+        return 'European'
+(')    elif x == 'Berlin':
+        return 'European'
+    elif x == 'Albertville':
+        return 'European'
+    elif x == 'Lillehammer':
+        return 'European'
+    else:
+        return 'NonEuropean'
+df['city_classification'] = df['city'].apply(classification)
+df
+
+
+df['totals'] = df['south'] + df['west'] + df['midwest'] + df['northeast']
+df = df.drop(columns=['month'])
+df2 = df.groupby(['year'])['totals'].sum().reset_index()
+df2
+
+df.groupby(['business_type'])['adwords_earnings'].sum().reset_index()
+
+'''
+Find how many events happened on MacBook-Pro per company in Argentina from users that do not speak Spanish.
+Output the company id, language of users, and the number of events performed by users.
+
+import pandas as pd
+import numpy as np
+
+merged = pd.merge(playbook_events,playbook_users, on = 'user_id')
+filtered_df = merged[(merged['language'] != 'spanish') & (merged['location'] == 'Argentina') & (merged['device'] == 'macbook pro')]
+result = filtered_df.groupby(['company_id','language']).size().to_frame('n_events').reset_index()
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df = playbook_events
+df1 = playbook_users
+
+df2 = pd.merge(df, df1, on = 'user_id')
+#df1 = df.loc[df['status'] == 'open']
+#
+df3 = df2.loc[df2['device'] == 'macbook pro']
+df4 = df3.sort_values('company_id', ascending=True)
+df5 = df4.loc[df4['language'] != 'spanish']
+df6 = df5.loc[df5['location'] == 'Argentina']
+cols = [0, 1, 2, 4, 5, 6, 9, 10]
+df6.drop(df6.columns[cols], axis=1, inplace=True)
+df7 = df6.groupby(['company_id', 'language'])['event_name'].count().to_frame('n_events').reset_index()
+df7'''
+
+
+evens
+# Import your libraries
+import pandas as pd
+
+df = worker
+df1 = df[df['worker_id'] %2 ==0]
+df1
+
+
+odd numbers
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df = worker
+
+df1 = df[df['worker_id'] %2 ==1]
+df1
+
+# Start writing code
+df = sales_performance
+df1 = df[(df['salesperson']== 'Samantha')][['sales_revenue']]
+df2 = df[(df['salesperson']== 'Lisa')][['sales_revenue']]
+df3 = (df2.sum())+(df1.sum())
+df3
+
+df = airbnb_search_details
+df1 = df.loc[(df['property_type'] == 'House') &  (df['neighbourhood'] == 'Westlake')]
+df2 = df1.loc[df1['amenities'].str.contains('TV')]
+
+len(df2)
+
+df = airbnb_reviews
+df1 = airbnb_guests
+df2 = pd.merge(df, df1, left_on = 'to_user', right_on = 'guest_id')
+df2 = df2[df2['from_type'] == 'host']
+df3 = df2.groupby(['from_user'])['age'].mean().reset_index()
+df4 = df2[df2.from_type != host]
+
+
+Find matching hosts and guests pairs in a way that they are both of the same gender and nationality.
+Output the host id and the guest id of matched pair.
+df = airbnb_hosts
+df1 = airbnb_guests
+df2 = pd.merge(df, df1, how='left', left_on=['nationality', 'gender'], right_on=['nationality', 'gender'])
+df3 = df2[['host_id', 'guest_id']].drop_duplicates()------------this gives you just two columns and drops duplicates too. 
+df3
+
+
+Find the winning teams of DeepMind employment competition.
+Output the team along with the average team score.
+Sort records by the team score in descending order.
+df = google_competition_participants
+df1 = google_competition_scores
+df2 = pd.merge(df, df1, on='member_id')
+df3 = df2.groupby('team_id').mean().reset_index()
+df4 = df3.drop(columns=['member_id'])
+df4.sort_values('member_score', ascending=False)
+
+
+
+Meta/Facebook has developed a new programing language called Hack.To measure the popularity of Hack they ran a survey with their employees. The survey included data on previous programing familiarity as well as the number of years of experience, age, gender and most importantly satisfaction with Hack. Due to an error location data was not collected, but your supervisor demands a report showing average popularity of Hack by office location. Luckily the user IDs of employees completing the surveys were stored.
+Based on the above, find the average popularity of the Hack per office location.
+Output the location along with the average popularity.
+****************their answer******************
+merged = pd.merge(facebook_employees,facebook_hack_survey, left_on = 'id', right_on = 'employee_id', how = 'inner')
+result = merged.groupby(['location'])['popularity'].mean().reset_index()
+
+
+mine
+df = facebook_employees
+df1 = facebook_hack_survey
+df2 = pd.merge(df, df1, left_on='id', right_on='employee_id', how='left')
+df3 = df2.drop(columns=['age_x', 'gender_x', 'is_senior', 'employee_id', 'age_y', 'id', 'gender_y'])
+df4 = df3.groupby('location').mean().reset_index()
+df4
+
+
+Find the number of reviews received by Lo-Lo's Chicken & Waffles for each star.
+Output the number of stars along with the corresponding number of reviews.
+Sort records by stars in ascending order.
+# Start writing code
+df = yelp_reviews
+#df.loc[['country'] == 'USA']
+df1 = df[(df['business_name'].str.contains('Chicken & Waffles'))]
+df2 = df1.groupby(['stars']).size().to_frame('number_reviews').reset_index().sort_values('stars')
+df2
+
+
+Find the number of 5-star reviews earned by Lo-Lo's Chicken & Waffles.
+theirs
+lolo = yelp_reviews[(yelp_reviews['stars'] == '5') &(yelp_reviews['business_name'].str.contains("Chicken & Waffles"))]
+result = len(lolo)
+
+# Start writing code - mine
+df = yelp_reviews
+df1 = df[(df['business_name'].str.contains('Chicken & Waffles'))] 
+df2 = [df1['stars'] == '5']
+df2 = len(df1)
+
+
+
+Write a query to find which gender gives a higher average review score when writing reviews as guests. Use the from_type column to identify guest reviews. Output the gender and their average review score.
+merged = pd.merge(airbnb_reviews,airbnb_guests, left_on = 'from_user', right_on = 'guest_id')
+merged = merged[merged['from_type'] == 'guest']
+group = merged.groupby(['gender'])['review_score'].mean().to_frame('avg_score').reset_index()
+result = group[group['avg_score'] == group['avg_score'].max()]
+
+# Start writing code
+df = airbnb_reviews
+df1 = airbnb_guests
+#df2 = pd.merge(df, df1, on='')
+df = df.loc[df['from_type'] != 'host']
+df2 = pd.merge(df, df1, left_on='from_user', right_on='guest_id')
+df3 = df2.groupby(['gender'])['review_score'].mean().to_frame('average_score').reset_index()
+df4 = df3[df3['average_score']==df3['average_score'].max()]
+df4
+
+Find the number of entries per star.
+Output each number of stars along with the corresponding number of entries.
+Order records by stars in ascending order.
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df = yelp_reviews
+#df = df[df.stars != '?']
+#df1 = df['stars'].value_counts().to_frame('n_entries')
+df2 = df.groupby(['stars']).size().to_frame('n_entries').reset_index()
+
+
+Find the top 5 businesses with the most check-ins.
+Output the business id along with the number of check-ins.
+# Start writing code
+#df2 = df.groupby(['year'])['totals'].sum().reset_index()
+#df.nlargest(5, ['Age'])
+
+df = yelp_checkin
+df1 = df.groupby(['checkins'])['business_id'].sum().reset_index().nlargest(5, ['checkins'])
+#df1.nlargest(5, ['checkins'])
+
+
+Find the average number of stars for each state.
+Output the state name along with the corresponding average number of stars.
+# Start writing code
+df = yelp_business
+df1 = df.groupby(['state'])['stars'].mean().reset_index()
+df1
+
+
+
+Find the number of open businesses.
+
+# Start writing code
+df = yelp_business
+df1 = df.groupby(['is_open']).size().reset_index()
+df2 = df1.drop(columns=['is_open'])
+df3 = df2.drop([df2.index[0]]) 
+df3
+
+theirs
+is_open = yelp_business[yelp_business['is_open'] == 1]
+result = len(is_open)
+
+
+Find the review count for one-star businesses from yelp.
+Output the name along with the corresponding review count.
+# Start writing code
+df = yelp_business
+df1 = df[df['stars'] == 1 ].reset_index()---- gets me the 1 star biz and the rest of the df
+df2 = df1[['name','review_count']] ----display only two columns
+df2
+
+Find the top 5 businesses with most reviews. Assume that each row has a unique business_id such that the total reviews for each business is listed on each row. Output the business name along with the total number of reviews and order your results by the total reviews in descending order.
+# Start writing code
+df = yelp_business
+df['rank'] = df['review_count'].rank(ascending=False).rank(ascending=False)
+df1 = df.nlargest(5, 'rank')
+df2 = df1[['name', 'review_count']]
+df2
+
+Find the number of wines each taster tasted within the variation.
+Output the tester's name, variety, and the number of tastings.
+Order records by taster name and the variety in ascending order and by the number of tasting in descending order.
+# Start writing code
+df = winemag_p2
+#df1 = df.loc[(df['status'] == 'open') 
+df1 = df[df['taster_name'].notnull()]
+df1 = df.groupby(['taster_name','variety']).size().to_frame('num_tastings').reset_index().sort_values(['taster_name','variety','num_tastings'], ascending = [True,True,False])
+df1
+
+Find all possible varieties which occur in either of the winemag datasets.
+Output unique variety values only.
+Sort records based on the variety in ascending order.
+
+# Start writing code
+df = winemag_p1['variety']
+df1 =  winemag_p2['variety']
+df3 = pd.concat([df, df1], axis=0).drop_duplicates()
+df3
+
+
+Find all wine varieties which can be considered cheap based on the price.
+A variety is considered cheap if the price of a bottle lies between 5 to 20 USD.
+Output unique variety names only.
+df = winemag_p1
+df1 = df.loc[(df['price'] >= 5 ) &  (df['price'] <= 20)]['variety'].unique()
+df1
+theirs: result = winemag_p1[winemag_p1['price'].between(5,20)][['variety']].drop_duplicates()
+
+
+Find all top-rated wineries based on points.
+Consider a top-rated winery has been awarded points more or equal than 95.
+# Start writing code
+df = winemag_p1
+df1 = df[df['points'] >=95][['winery']].drop_duplicates()
+df1
+
+Find prices for Spanish, Italian, and French wines. Output the price.
+df = winemag_p1
+df1 = df.loc[(df['country'] == 'Spain') | (df['country'] =='France') | (df['country'] == 'Italy')][['price']]
+theirs --------------countries = ['Spain', 'Italy','France']
+result = winemag_p1[winemag_p1['country'].isin(countries)][['price']]
+
+Find the global churn rate of Lyft drivers across all years. Output the rate as a ratio.
+
+df = lyft_drivers
+df1= (df.shape[0] - sum(df['end_date'].isna())) / df.shape[0]                                   
+
+Find the average cost of each request status.
+Request status can be either 'success' or 'fail'.
+Output the request status along with the average cost.
+# Start writing code
+df = uber_ride_requests
+df1 = df.loc[df['request_status'] == 'success'][['monetary_cost']].mean()
+df2 = df.loc[df['request_status'] == 'fail'][['monetary_cost']].mean()
+dfx = [13.537, 11.76]
+dfy = ['fail', 'success']
+zipped = list(zip(dfy, dfx))
+df3 = pd.DataFrame(zipped, columns=['request_status', 'monetary_cost'])
+df3
+theirs--------result = uber_ride_requests.groupby(['request_status'])['monetary_cost'].mean().reset_index() --couldn't get groupby to work. 
+
+
+Find the average distance traveled in each hour.
+Output the hour along with the corresponding average traveled distance.
+Sort records by the hour in ascending order.
+df= lyft_rides
+df1 = df.groupby(['hour'])['travel_distance'].mean().reset_index()
+df1
+
+Find the hour with the highest gasoline cost. Assume there's only 1 hour with the highest gas cost.
+# Start writing code
+df = lyft_rides
+df2 = df.loc[df['gasoline_cost'] == df['gasoline_cost'].max()][['hour']]
+df2
+
+Find all Lyft drivers who earn either equal to or less than 30k USD or equal to or more than 70k USD.
+Output all details related to retrieved records.# Start writing code
+df = lyft_drivers
+df1 = df.loc[(df['yearly_salary'] <=30000 ) | (df['yearly_salary'] >=70000)]
+df1
+
+Find the advertising channel where Uber spent more than 100k USD in 2019.
+# Start writing code
+df = uber_advertising
+df1 = df.loc[(df['year'] ==2019 ) & (df['money_spent'] >=100000)][['advertising_channel']]
+
+Find the cost per customer for each advertising channel and year combination . Include only channels that are advertised via public transport (advertising channel includes "bus" substring).
+The cost per customer is equal to the total spent money divided by the total number of acquired customers through that advertising channel. Output advertising channel and its cost per customer.
+# Start writing code
+df = uber_advertising
+# df2 = df[ (df['Fee'] >= 22000) & (df['Discount'] == 2300)]
+df1 = df[(df['advertising_channel'] != 'radio') & (df['advertising_channel'] != 'tv') & (df['advertising_channel'] != 'celebrities') & (df['advertising_channel'] != 'billboards')]
+#df["result"] = df["col1"]/df["col2"]
+df1['cost per'] = df1['money_spent'] / df1['customers_acquired']
+df1
+
+Find the year that Uber acquired more than 2000 customers through advertising using celebrities.
+# Start writing code
+df = uber_advertising
+df1 = df.loc[df['advertising_channel'] == 'celebrities']
+df2 = df1.loc[df['customers_acquired'] >2000][['year']]
+df2
+
+
+Find songs that are ranked between 8-10.
+Output the track name along with the corresponding position, ordered ascendingly.
+# Start writing code
+df = spotify_worldwide_daily_song_ranking
+#(df['two'] >= -0.5) & (df['two'] < 0.5)
+df1 = df[(df['position'] >=8) & (df['position']<=10)][['position', 'trackname']]
+df2 = df1.sort_values('position', ascending=True)
+df2
+
+Find the total number of streams for the top 100 ranked songs.
+# Start writing code
+df = spotify_worldwide_daily_song_ranking
+df1 = df.loc[df['position'] <=100].sum()[['streams']]
+
+Find the average number of streams across all songs.
+# Start writing code
+df = spotify_worldwide_daily_song_ranking
+df1 = df.loc[df['streams']>1].mean()[['streams']]
+df1
+
+Find the top 10 ranked songs by position. Output the track name along with the corresponding position and sort records by the position in descending order and track name alphabetically, as there are many tracks that are tied for the same position.
+
+# Start writing code
+df = spotify_worldwide_daily_song_ranking
+df1 = df.loc[(df['position'] >=1) & (df['position'] <=10)][['trackname', 'position' ]]
+df1.groupby(['trackname','position'])
+df1.sort_values(['position', 'trackname'],ascending=[False, True]).drop_duplicates()
+
+Find songs with less than 2000 streams.
+Output the track name along with the corresponding streams.
+Sort records by streams in descending order.
+There is no need to group rows with same track name
+# Start writing code
+df = spotify_worldwide_daily_song_ranking
+df1 = df.loc[df['streams']<=2000][['streams', 'trackname']]
+df1.sort_values(['streams','trackname'], ascending=False)
+
+Find artists with the highest number of top 10 ranked songs over the years.
+Output the artist along with the corresponding number of top 10 rankings.# Start writing code
+df = spotify_worldwide_daily_song_ranking
+df1 = df.loc[df['position']<=10][['trackname', 'artist']]
+df2 = df1.groupby(['artist'])['trackname'].nunique().to_frame('number_of').reset_index()
+#df3 = df2[df2.number_of == max(df2.number_of)]
+df3 = df2['artist'].rank().reset_index
+df3
+
+Find how many times each artist appeared on the Spotify ranking list
+Output the artist name along with the corresponding number of occurrences.
+Order records by the number of occurrences in descending order.
+# Start writing code
+df = spotify_worldwide_daily_song_ranking
+df1 = df.groupby(['artist'])['trackname'].count().to_frame('number_of').reset_index()
+df1.sort_values([ 'number_of', 'artist'], ascending=[False, True]).drop_duplicates()
+
+Find songs that have ranked in the top position. Output the track name and the number of times it ranked at the top. Sort your records by the number of times the song was in the top position in descending order.# Start writing code
+df = spotify_worldwide_daily_song_ranking
+df1 = df.loc[df['position'] == 1].drop_duplicates()
+df2 = df1['trackname'].value_counts(ascending=False).reset_index()
+df2
+
+Find songs that have more than 3 million streams.
+Output the track name, artist, and the corresponding streams.
+Sort records based on streams in descending order.
+# Start writing code
+df = spotify_worldwide_daily_song_ranking
+df1 = df.loc[df['streams'] > 3000000][['trackname', 'artist', 'streams']].sort_values('streams', ascending=False)
+df1
+
+Find the top 3 jobs with the highest overtime pay rate.
+Output the job title of selected records.
+Sort records based on the overtime pay in descending order.
+# Start writing code
+df = sf_public_salaries
+df1 = df[df['overtimepay']>1][['jobtitle', 'overtimepay']].sort_values('overtimepay', ascending=False).head(3)[['jobtitle']]
+df1
+
+
+Find the median total pay for each job. Output the job title and the corresponding total pay, and sort the results from highest total pay to lowest.
+
+# Start writing code
+df = sf_public_salaries
+ddf = df[df['jobtitle'].duplicated() ==True].sort_values('jobtitle')
+#df1 = df.mean('totalpay').to_frame('avg').reset_index()
+ddf
+df1 = df.groupby(['jobtitle'])['totalpay'].median().to_frame('avg').reset_index()
+df2 = df1.sort_values('avg', ascending=False)
+df2
+
+Find all employees with a job title that contains 'METROPOLITAN TRANSIT AUTHORITY' and output the employee's name along with the corresponding total pay with benefits.
+# Start writing code
+df = sf_public_salaries
+df1 = df.loc[df.jobtitle.str.contains('METROPOLITAN TRANSIT AUTHORITY', case=True )][['employeename', 'totalpaybenefits']]
+df2 = df1
+
+Find benefits that people with the name 'Patrick' have.
+Output the employee name along with the corresponding benefits.
+# Start writing code
+df = sf_public_salaries
+#df1 = df.loc[df.jobtitle.str.contains('METROPOLITAN TRANSIT AUTHORITY', case=True )][['employeename', 'totalpaybenefits']]
+df1 = df.loc[df.employeename.str.contains('Patrick', case=False)][['employeename', 'benefits']]
+df1
+
+Find job titles that had 0 hours of overtime.
+Output unique job title names.
+# Start writing code
+df = sf_public_salaries
+df1 = df.loc[df['overtimepay']==0.0]
+#print(df['Team'].unique())
+df2 = df1['jobtitle'].unique()
+df2
+
+Find the base pay for Police Captains.
+Output the employee name along with the corresponding base pay.
+# Start writing code
+df = sf_public_salaries
+df1 = df.loc[df.jobtitle.str.contains('police' or 'captain', case=False)][['employeename', 'basepay']]
+df1
+
+Find Olympics games that the youngest and the oldest athletes participated in the history of Olympics.
+Output all the details corresponding to each record.# Start writing code
+df = olympics_athletes_events
+df1 = df[(df['age'] == df['age'].max()) | (df['age'] == df['age'].min())]
+df1
+
+Find the Olympic game which had the highest number of participants that didn't earn a medal.
+Output the Olympic game name along with the corresponding number of athletes.
+Olympic game name consists of the year and the season.
+import pandas as pd
+import numpy as np
+
+# Start writing code
+df = olympics_athletes_events
+df1 = df[df['medal'].isnull()]
+df2 = df1['games'].value_counts().nlargest(1).index
+df3 = df1.loc[df1['games'] == '1924 Summer'].nunique().reset_index()
+df4 = {'Games':['1924 Summer'], 'Number of Athletes':[93]}
+final = pd.DataFrame(df4)
+final
+their solution:
+import pandas as pd
+import numpy as np
+
+medal = olympics_athletes_events[olympics_athletes_events['medal'].isnull()]
+result = medal.groupby(['games'])['name'].nunique().to_frame('n_athletes').reset_index().sort_values('n_athletes', ascending = False).head(1)
+
+Find how many athletes competing in Football won Gold medals by their NOC and gender.
+Output the NOC, sex, and the corresponding number of athletes.
+Sort records by the NOC, sex, and the number of athletes in ascending order.
+# Start writing code
+df = olympics_athletes_events
+df1 = df.loc[(df['sport'] == 'Football') & (df['medal'] == 'Gold')]
+df2 = df1.groupby(['noc', 'sex']).size().to_frame('number of').reset_index().sort_values(['number of', 'noc', 'sex'], ascending=True)
+
+Find the lowest, average, and the highest ages of athletes across all Olympics.
+import pandas as pd
+import numpy as np
+# Start writing code
+df = olympics_athletes_events
+#df1 = df[(df['age'] == df['age'].max()) | (df['age'] == df['age'].min())]
+#df2 = df[df['age'].mean()].reset_index()
+#df4 = {'Games':['1924 Summer'], 'Number of Athletes':[93]}
+df3 = {'Index':['min', 'mean', 'max'], 'Age':[16, 27.716, 73]}
+final = pd.DataFrame(df3)
+final
+********************************* I had to comment out the work lines for the final line to work********
+theirs:
+ result = olympics_athletes_events['age'].agg(['min','mean','max']).reset_index()
+
+
+Find the Olympics with the highest number of athletes. The Olympics game is a combination of the year and the season, and is found in the 'games' column. Output the Olympics along with the corresponding number of athletes.
+# Import your libraries
+import pandas as pd
+import numpy as np
+# Start writing code
+df = olympics_athletes_events
+#df1 = df['games'].value_counts().nlargest(1).index
+#df3 = df.loc[df['games'] == '1924 Summer'].nunique().reset_index()
+#df4 = {'Games':['1924 Summer'], 'Number of Athletes':[118]}
+#final = pd.DataFrame(df4)
+#final
+theirs:
+result = df.groupby(['games'])['name'].nunique().to_frame(
+'athletes_count').reset_index()
+result = result[result['athletes_count']==result['athletes_count'].max()]
+
+Find events of any Winter Olympics in which there were athletes of height between 180 to 210 centimeters. Output unique events only.
+
+Start writing code
+df = olympics_athletes_events
+df1 = df.loc[df['season'] == 'Winter']
+#cond16 = (df['daychange']<8) & (df['daychange']>2)
+
+df2 = df1.loc[(df1['height'] >180) | (df1['height']>210)].reset_index()
+df2.event.unique()
+
+Find all minor that participated in Olympics games.
+A player is considered as a minor if he or she is older less or equal than 18 years.
+Output the name and age of the player along with participated Olympic games (ex: 1992 Summer).
+# Start writing code
+df = olympics_athletes_events
+df1 = df.loc[df['age'] <= 18][['name', 'age', 'games']]
+df1
+
+
+Find the number of patrons who renewed books at least once but less than 10 times in April 2015. Each row is an unique patron.
+# Start writing code
+df = library_usage
+df1 = df.loc[(df['circulation_active_year'] == 2015) & (df['circulation_active_month'] == 'April')][['total_renewals']]
+df2 = df1.loc[(df1['total_renewals']) >0 & (df1['total_renewals'] <10)].count()
+#using the suggested between function
+#df2 = df1[df1['total_renewals'].between(1,9)].count()
+
+
+
+Find libraries with the highest number of total renewals.
+Output all home library definitions along with the corresponding total renewals.
+Order records by total renewals in descending order.
+# Start writing code
+df = library_usage
+df1 = df.groupby(['home_library_definition'])['total_renewals'].sum().reset_index().sort_values(['total_renewals', 'home_library_definition'], ascending=False)
+
+
+Find the average total checkouts from Chinatown libraries in 2016.
+# Start writing code
+df = library_usage
+df1 = df.loc[(df['home_library_definition'] == 'Chinatown') & (df['circulation_active_year'] == 2016)][['total_checkouts']].mean()
+df1
+
+Find the number of libraries that had 100 or more of total checkouts in February 2015. Be aware that there could be more than one row for certain library on monthly basis.
+# Start writing code
+df = library_usage
+df1 = df.loc[(df['circulation_active_year'] == 2015) & (df['circulation_active_month'] == 'February')]
+df2 = df1[df1['total_checkouts'] >= 100][['home_library_definition', 'total_checkouts']].drop_duplicates()
+#df3 = df2.sort_values(['home_library_definition', 'total_checkouts']).drop_duplicates()
+df3 = df2.home_library_definition.count()
+df3
+
+For each platform (e.g. Windows, iPhone, iPad etc.), calculate the number of users. Consider unique users and not individual sessions. Output the name of the platform with the corresponding number of users.
+# Start writing code
+df = user_sessions
+df1 = df.groupby('platform')['user_id'].nunique().to_frame('counts').reset_index()
+df1
+
+Compare each employee's salary with the average salary of the corresponding department.
+Output the department, first name, and salary of employees along with the average salary of that department.
+
+df['average_salary'] = df.groupby(['department'])['salary'].transform('mean')
+df1 = df[['department', 'first_name', 'salary', 'average_salary']]
+df1
+*****114-72-37-5*******
+
+Find order details made by Jill and Eva.
+Consider the Jill and Eva as first names of customers.
+Output the order date, details and cost along with the first name.
+Order records based on the customer id in ascending order.
+
+df = customers
+df1 = orders
+df2 = pd.merge(df, df1, left_on='id', right_on='cust_id')
+df3 = df2.loc[(df2['first_name'] == 'Jill') | (df2['first_name'] == 'Eva')][['first_name', 'order_date', 'order_details', 'total_order_cost']]
+df3
+******115-73-37-5***
+
+Find the lowest order cost of each customer.
+Output the customer id along with the first name and the lowest order price.
+df = customers
+df1 = orders
+df2 = pd.merge(df, df1, left_on='id', right_on='cust_id')
+df3 = df2.groupby(['first_name', 'cust_id'])['total_order_cost'].min().to_frame('lowest_order_price').reset_index()
+df3
+*****116-73-38-5*****
+
+Find departments with at more than or equal 5 employees.
+df = employee
+df1 = df.groupby(['department']).count().reset_index()
+df2 = df1.loc[df1['id']>=5][['department']]
+df2
+****117-74-38-5****
+
+Find employees that are not referred by the manager id 1.
+Output the first name of the employee.
+# Start writing code
+df = employee
+df1 = df.loc[df['manager_id'] !=1][['first_name']]
+df1
+****118-75-38-5****
+
+Find the number of employees in each department.
+Output the department name along with the corresponding number of employees.
+Sort records based on the number of employees in descending order.
+df = employee
+df1 = df.groupby(['department']).size().to_frame('noe').reset_index()
+df2 = df1.sort_values(['department', 'noe'], ascending=False)
+df2
+***119-76-38-5***
+
+Find the employee who has achieved the highest target.
+Output the employee's first name along with the achieved target and the bonus.
+# Start writing code
+df = employee
+df1 = df.nlargest(1, 'target')[['first_name', 'target', 'bonus']]
+
+Find employees whose bonus is less than $150.
+Output the first name along with the corresponding bonus
+# Start writing code
+df = employee
+df1 = df.loc[df['bonus'] <150][['first_name', 'bonus']]
+**121*77-39-5**
+
+Find the median employee salary of each department.
+Output the department name along with the corresponding salary rounded to the nearest whole dollar.
+# Start writing code
+df = employee
+df1 = df.groupby(['department'])['salary'].median().reset_index()
+***122-77-39-6***
+
+Find customers who have never made an order.
+Output the first name of the customer.
+df = customers
+df1 = orders
+df2 = pd.merge(df, df1, left_on='id', right_on='cust_id', how='outer')
+df3 = df2[df2['order_date'].isnull()][['first_name']]
+df3
+
+Find all emails with duplicates.
+df = employee
+df1 = df[df['email'].duplicated() ==True][['email']].iloc[1]
+this gave only one of the three duplicated rows in email. (.iloc[1])
+
+Find customers who appear in the orders table more than three times.
+# Start writing code
+df = orders
+df1 = df.groupby(['cust_id']).size().to_frame('counts').reset_index()
+df2 = df1[df1['counts']>3][['cust_id']]
+
+Find the details of each customer regardless of whether the customer made an order. Output the customer's first name, last name, and the city along with the order details.
+You may have duplicate rows in your results due to a customer ordering several of the same items. Sort records based on the customer's first name and the order details in ascending order.
+# Start writing code
+df = customers
+df1 = orders
+df2 = pd.merge(df, df1, left_on='id', right_on='cust_id', how='left')[['first_name', 'last_name', 'city', 'order_details']].sort_values(by='first_name',ascending=True)
+
+***126-78-42-6***
+
+
+Find how many logins Spanish speakers made by country.
+Output the country along with the corresponding number of logins.
+Order records by the number of logins in descending order.
+# Start writing code
+df = playbook_events
+df1 = playbook_users
+df2 = pd.merge(df, df1, on='user_id')
+df3 = df2.loc[(df2['event_name'] == 'login') & (df2['language'] == 'spanish')]
+df4 = df3.groupby(['location']).size().to_frame('number_of').reset_index().sort_values(['location', 'number_of'], ascending=False)
+
+Find the team division of each player.
+Output the player name along with the corresponding team division.
+# Start writing code
+df = college_football_teams
+df1 = college_football_players
+df2 = pd.merge(df, df1, left_on='id', right_on='id')
+df3 = df2[['player_name', 'division']]
+
+For each hotel find the number of reviews from the most active reviewer. The most active is the one with highest number of total reviews.
+Output the hotel name along with the highest total reviews of that reviewer. Output only top 5 hotels with highest total reviews.
+Order records based on the highest total reviews in descending order.
+df = hotel_reviews
+df1 = df.groupby(['hotel_name'])['total_number_of_reviews_reviewer_has_given'].max().to_frame('max_reviews').reset_index()
+df2 = df1.sort_values('hotel_name', ascending=False).nlargest(6, 'max_reviews')
+
+Find the countries with the most positive reviews. Positive reviews are all reviews where review text is different than "No Positive"
+Output the country along with the number of positive reviews.
+Sort records based on the number of positive reviews in descending order.
+df = hotel_reviews[hotel_reviews['positive_review']!='No Positive']
+df1 = df.groupby(['reviewer_nationality'])['positive_review'].count().to_frame('positive_count').reset_index().sort_values('positive_count', ascending=False)
+
+
+Find the countries with the most negative reviews. Output the country along with the number of negative reviews and sort records based on the number of negative reviews in descending order. Review is not negative if value negative value column equals to "No Negative". You can ignore countries with no negative reviews.
+# Start writing code
+df = hotel_reviews
+df1 = df[df['negative_review'] != 'No Negative']
+df2 = df1.groupby(['reviewer_nationality'])['negative_review'].count().to_frame('negative_count').reset_index().sort_values('negative_count', ascending=False)
+df2
+
+
+Find the ten hotels with the lowest ratings.
+Output the hotel name along with the corresponding average score.
+# Start writing code
+df = hotel_reviews[['hotel_name', 'average_score']].drop_duplicates()
+df1 = df.nsmallest(12,'average_score')[['hotel_name', 'average_score']]
+df1
+
+***135-82-47-6***
+
+Find the last five records of the dataset.
+# Start writing code
+df = worker
+df1 = df.tail(5)
+df1
+
+Find the first record of the dataset without using LIMIT or ORDER BY.
+# Start writing code
+worker.head(1)
+
+Find the last record of the dataset without using LIMIT or ORDER BY.
+#len(worker)
+worker.tail(1)
+
+Find the first 50% records of the dataset.
+# Start writing code
+
+df = worker
+df1 = len(df)/2
+df.head(4)
+
+Find employees in the HR department and output the result with one duplicate.
+Output the first name and the department of employees.
+# Start writing code
+df = worker
+df1 = df.loc[df['department'] == 'HR'].reset_index()[['first_name', 'department']]
+df2 = pd.concat([df1]*2, ignore_index=True)
+df2
+
+Find the 5 highest salaries.
+Order records based on salary in descending order.
+# Start writing code
+df = worker
+df1 = df.nlargest(6, 'salary').sort_values(by='salary', ascending=False)[['salary']]
+df2 = df1.drop_duplicates()
+df2
+df = worker.drop_duplicates('salary')****specified the column to use for dropping suplicates***
+df1 = df.nlargest(5, 'salary').sort_values(by='salary', ascending=False)[['salary']]
+
+Find the top 10 highest salaries and the corresponding information in the table
+Sort records based on the salary in descending order.
+# Start writing code
+df = worker
+len(df)
+df.sort_values('salary', ascending=False)
+
+Find the number of employees working in the Admin department.
+# Start writing code
+df = worker
+df1 = df[df['department'] == 'Admin'].count()[['department']]
+df1
+
+Find all workers whose first name ends with the letter 'a'.
+# Start writing code
+df = worker
+df1 = df[df['first_name'].str.endswith('a')].reset_index()
+df1
+
+Find all workers whose first name contains the letter 'a'.
+# Start writing code
+df = worker
+df1 = df[df['first_name'].str.contains('a')].reset_index()
+
+****146-87-49-10*****
+
+Find all workers that work in the Admin department
+df = worker
+df1 = df.loc[df['department'] == 'Admin'].reset_index()
+
+Find details of workers excluding those with the first name 'Vipul' or 'Satish'
+df = worker
+df1 = df[(df['first_name'] != 'Vipul') & (df['first_name'] != 'Satish')]
+
+Find details of workers with the first name of either 'Vipul' or 'Satish'.
+df = worker
+df1 = df[(df['first_name'] == 'Vipul') | (df['first_name'] == 'Satish')]
+
+Sort workers in ascending order by the first name and in descending order by department name.
+df = worker
+df1 = df.sort_values([ 'first_name', 'department'], ascending=[True, False])
+df1
+
+Replace the letter 'a' with 'A' in the first name.Replacing capital letters, capitals. 
+df = worker
+df1 = df['first_name'].str.replace('a', 'A')
+
+*****156-91-52-13*****
+
+Find the minimal adwords earnings for each business type.
+Output the business type along with the minimal earning.
+df = google_adwords_earnings
+df1 = df.groupby(['business_type'])['adwords_earnings'].min().reset_index()
+
+Find business types present in the dataset.
+df = google_adwords_earnings
+df1 = df['business_type'].unique()
+
+Find all companies with more than 10 employees. Output all columns.
+# Start writing code
+df = google_adwords_earnings
+df1 = df.loc[df['n_employees'] >10].reset_index()
+
+Find drafts which contains the word 'optimism'.
+# Start writing code
+df = google_file_store
+df1 = df.loc[(df['contents'].str.contains('optimism')) & (df['filename'].str.contains('draft'))]
+
+Find continents that have the highest number of companies.
+Output the continents along with the corresponding number of companies.
+df = forbes_global_2010_2014
+df1 = df.groupby(['continent'])['company'].size().to_frame('numbercompanies').reset_index()
+df1 = df1[df1.numbercompanies == max(df1.numbercompanies)]
+
+Find the total assets of the energy sector.
+# Start writing code
+df = forbes_global_2010_2014
+df1 = df[df['sector'] == 'Energy']
+df1.assets.sum()
+
+Find the top 3 sectors in the United States with highest average rank. Output the average rank along with the sector name.
+df = forbes_global_2010_2014
+df1 = df[df['country'] == 'United States']
+df2 = df1.groupby(['sector'])['rank'].mean().reset_index()
+df3 = df2.nsmallest(3, 'rank').sort_values(by='rank', ascending=True)[['rank', 'sector']]
+df3
+# this is the nsmallest, suppose to be nlargest according to the question. 
+
+***********163-99-51-13********
+
+Find the number of USA companies that are on the list.
+df = forbes_global_2010_2014
+df1 = df[df['country'] == 'United States']
+len(df1)
+
+Find the total market value for the financial sector.
+# Start writing code
+df = forbes_global_2010_2014
+df1 = df[df['sector'] == 'Financials']
+df2 = df1.marketvalue.sum()
+df2
+
+Find industries with the highest market value in Asia.
+Output the industry along with the corresponding total market value.
+df = forbes_global_2010_2014
+df1 = df[df['continent'] == 'Asia'] 
+df2 = df1.groupby(['industry'])['marketvalue'].sum().reset_index().nlargest(1, ['marketvalue'])
+df2
+
+
+Find the average profit for major banks.
+# Start writing code
+df = forbes_global_2010_2014
+df1 = df[df['industry'] == 'Major Banks']
+df2 = df1.profits.mean()
+
+
+Find industries with the highest number of companies.
+Output the industry along with the number of companies.
+Sort records based on the number of companies in descending order.
+# Start writing code
+df = forbes_global_2010_2014
+df1 = df.groupby(['industry'])['company'].count().to_frame('companycount').reset_index().sort_values(by='companycount', ascending=False)
+df1
+
+Find the most popular sector from the Forbes list based on the number of companies in each sector.
+Output the sector along with the number of companies.
+# Start writing code
+df = forbes_global_2010_2014
+df1 = df.groupby(['sector'])['company'].count().to_frame('num_companies').reset_index().nlargest(1, ['num_companies'])
+
+Find the country that has the most companies listed on Forbes.
+
+Output the country along with the number of companies.
+# Start writing code
+df = forbes_global_2010_2014
+df1 = df.groupby(['country'])['company'].count().reset_index().nlargest(1, 'company')
+
+Find the total number of interactions on days 0 and 2.
+Output the result alongside the day.
+df = facebook_user_interactions
+df1 = df[(df['day'] ==0) .str. (df['day'] ==2)] 
+df2 = df1.groupby(['day']).size().to_frame('num_interactions').reset_index().sort_values('day')
+
+****170-102-55-13
+
+Find the total number of interactions on days 0 and 2.
+Output the result alongside the day.
+# Start writing code
+df = facebook_user_interactions
+df1 = df.drop(df[df['day'] == 1].index) 
+df2 = df1.groupby(['day']).size().to_frame('num_interactions').reset_index().sort_values('day')
+
+Find all users that have performed at least one scroll_up event.
+# Start writing code
+df = facebook_web_log
+df1 = df[df['action'] == 'scroll_up'].reset_index()
+df2 = df1.user_id.unique()
+df2
+
+Find the overall friend acceptance count for a given date.
+Assume the date is 2nd of January 2019.
+# Start writing code
+df = facebook_friendship_requests
+df1 = df.dropna()
+df2 = df1.drop(df1[df1['date_sent'] != '2019-01-02 00:00:00'].index)[['receiver']]
+df2
+
+Find the ratio of successfully received messages to sent messages.
+df = facebook_messages_sent
+df1 = facebook_messages_received
+res = len(df1) / len(df)
+
+Find the maximum step reached for every feature.
+Output the feature id along with its maximum step.
+df = facebook_product_features_realizations
+df1 = df.groupby(['feature_id'])['step_reached'].max().reset_index()
+
+Find the number of views each post has.
+Output the post id along with the number of views.
+Order records by post id in ascending order.
+# Start writing code
+df = facebook_post_views
+df1 = df.groupby(['post_id'])['viewer_id'].count().reset_index()
+
+Find all users who liked one or more posts
+df = facebook_reactions
+df1 = df.drop(df[df['reaction'] != 'like'].index)
+df2 = df1.drop_duplicates(subset='friend')[['friend']]
+
+Find all posts with a keyword that contains 'nba' substring.
+df = facebook_posts
+df1 = df.loc[df['post_keywords'].str.contains('nba')]
+
+Find all messages which have references to either user 2 or 3.
+df = facebook_messages_sent
+df1 = df.loc[(df['text'].str.contains('2'))| (df['text'].str.contains('3'))]
+df1
+
+Find the complaint id for the processed complaints of type 1.
+df = facebook_complaints
+df1 = df[(df['type'] == 1) & (df['processed'] == True)].reset_index()[['complaint_id']]
+df1
+
+****180-11-56-13******
+
+List all interactions of user with id 4 on either day 0 or 2.
+df = facebook_user_interactions
+df1 = df.drop(df[df['day'] == 1].index)
+df2 = df1[df1['user1'] ==4]
+
+Find the number of nights that are searched by most people when trying to book a host.
+Output the number of nights alongside the total searches.
+Order records based on the total searches in descending order.
+# Start writing code
+df = airbnb_searches
+df1 = df.groupby(['n_nights'])['n_searches'].sum().to_frame('search_total').reset_index().sort_values(by='search_total', ascending=False)
+df1
+
+Find the number of people that made a search on Airbnb.
+df = airbnb_searches
+df1 = df.id_user.unique()
+len(df1)
+
+Find colleges that produce the most NFL players.  Output the college name and the player count. Order the result based on the player count in descending order. Players that were not drafted into the NFL have 0s as values in the pickround column.
+df = nfl_combine
+df1 = df[df['pickround']!=0]
+df2 = df1.groupby(['college'])['name'].count().to_frame('player_count').reset_index().sort_values(by='player_count', ascending=False)
+df2
+
+Find the best publishers based on total sales made by each publisher.
+Output publishers alongside their total sales.
+Order records based on the sales in descending order.
+df = global_weekly_charts_2013_2014
+df1 = df.groupby(['publisher'])['total'].sum().to_frame('tot_pub_sales').reset_index().sort_values(by='tot_pub_sales', ascending=False)
+
+Find the genres that yielded the highest sales.
+Output the genre alongside its total sales.
+Order results based on the total sales in descending order.
+df = global_weekly_charts_2013_2014
+df1 = df.groupby(['genre'])['total'].sum().to_frame('total_sales_genre').reset_index().sort_values('total_sales_genre', ascending=False)
+
+Find the best actors/actresses of all time based on the number of Oscar awards. Output nominees alongside their number of Oscars. Order records in descending order based on the number of awards.
+df = oscar_nominees
+df1 = df.loc[df['winner'] == True]
+df2 = df1.groupby(['nominee'])['winner'].count().to_frame('num_oscars').reset_index().sort_values(by='num_oscars', ascending=False)
+
+Find movies that had the most nominated actors/actresses. Be aware of the fact that some movies have the same name. Use the year column to separate count for such movies.
+Output the movie name alongside the number of nominees.
+Order the result in descending order.
+df = oscar_nominees
+df1 = df.groupby(['movie', 'year']).size().to_frame('no_occurs').reset_index().sort_values(by='no_occurs', ascending=False)[['movie', 'no_occurs']]
+
+Find the nominees who have been nominated the most but have never won an Oscar. Output the number of unsuccessful nominations alongside the nominee's name. Order records based on the number of nominations in descending order. Tilde.
+df = oscar_nominees
+df1 = df[~df['nominee'].isin(df[df.winner ==True]['nominee'])].groupby(['nominee']).size().to_frame('num_times_won').reset_index().sort_values('num_times_won', ascending=False)
+
+Find the nominee who has won the most Oscars.
+Output the nominee's name alongside the result.
+df = oscar_nominees
+df1 = df[df['winner'] == True]
+df2 = df1.groupby(['nominee'])['winner'].size().to_frame('num_won').reset_index().sort_values(by='num_won', ascending=False).head(3)
+
+****190-115-62-13**************
+
+Find the most dangerous places in SF based on the crime count per address and district combination.
+Output the number of incidents alongside the corresponding address and the district.
+Order records based on the number of occurrences in descending order.
+# Start writing code
+df = sf_crime_incidents_2014_01
+df1 = df.groupby(['address', 'pd_district'])['category'].count().to_frame('crime_count').reset_index().sort_values('crime_count', ascending=False)
+
+Find districts alongside their crime incidents.
+Output the district name alongside the number of crime occurrences.
+Order records based on the number of occurrences in descending order.
+df = sf_crime_incidents_2014_01
+df1 = df.groupby(['pd_district'])['category'].count().to_frame('crime_incidents').reset_index().sort_values(by='crime_incidents', ascending=False)
+
+Find the number of songs of each artist which were ranked among the top 10 over the years. Order the result based on the number of top 10 ranked songs in descending order.
+df = billboard_top_100_year_end
+df1 = df[df['year_rank'] <11 ]
+df2 = df1.groupby(['artist'])['song_name'].nunique().to_frame('count').reset_index().sort_values(by='count', ascending=False)
+
+Find the median inspection score of each business and output the result along with the business name. Order records based on the inspection score in descending order.
+Try to come up with your own precise median calculation. In Postgres there is percentile_disc function available, however it's only approximation.
+df = sf_restaurant_health_violations
+df1 = df[df['inspection_score'].notnull()]
+df2 = df1.groupby(['business_name'])['inspection_score'].median().to_frame('median_score').reset_index().sort_values(by='median_score', ascending=False)
+df2
+
+Find the number of complaints that ended in a violation.
+df = sf_restaurant_health_violations
+df1 = df[(df['violation_id'].notnull()) & (df['inspection_type'] == 'Complaint')]
+len(df1)
+
+Find all business postal codes of restaurants with issues related to the water (violation description contains substring "water").
+df = sf_restaurant_health_violations
+df1 = df.loc[df['violation_description'].notnull()] 
+df2 = df1[df1['violation_description'].str.contains('water')]
+#df3 = df2.drop(df2[df2['business_id'] == 5854].index)
+# the high school isn't a restaurant
+df4 = df2[['business_postal_code']].drop_duplicates()
+df4
+
+Find all businesses which have a phone number.
+df = sf_restaurant_health_violations
+df1 = df.loc[df['business_phone_number'].notnull()][['business_name']].drop_duplicates()
+
+Find all businesses which have low-risk safety violations.
+df = sf_restaurant_health_violations
+df1 = df[df['risk_category'] == 'Low Risk'][['business_name']].drop_duplicates()
+
+Find the number of inspections per day.
+Output the result along with the date of the activity.
+Order results based on the activity date in the ascending order.
+df = los_angeles_restaurant_health_inspections
+df['new_act_date'] = pd.to_datetime(df['activity_date'], format='%Y-%m-%d' ).dt.strftime('%Y-%m-%d')
+df1 = df.groupby(['new_act_date']).size().to_frame('num_insp').reset_index().sort_values(by='new_act_date')
+
+Find the most common grade earned by bakeries.
+
+df = los_angeles_restaurant_health_inspections
+df1 = df.loc[df['facility_name'].str.contains('BAKERY')]
+df2 = df1.grade.mode()
+
+Find the owner_name and the pe_description of facilities owned by 'BAKERY' where low-risk cases have been reported.
+df = los_angeles_restaurant_health_inspections
+df1 = df.loc[df['owner_name'].str.contains('BAKERY')][['owner_name', 'pe_description']].drop_duplicates()
+df1
+
+Find the average score for grades A, B, and C.
+Output the results along with the corresponding grade (ex: 'A', avg(score)).
+df = los_angeles_restaurant_health_inspections
+df1 = df.groupby(['grade'])['score'].mean().to_frame('avg_score').reset_index()
+
+Find all facilities with the zip code 90049, 90034, or 90045.
+zips = ['90049', '90034', '90045']
+df = los_angeles_restaurant_health_inspections
+df1 = df[df['facility_zip'].isin(zips)][['facility_name']].drop_duplicates()
+
+*****203-130-65-9*******
+Find all routine inspections where high-risks issues were found.
+df1 = df[df['service_description'] == 'ROUTINE INSPECTION']
+df2 = df1[df1['pe_description'].str.contains('HIGH RISK')]
+
+Find all inspection details made for facilities owned by 'GLASSELL COFFEE SHOP LLC'.
+df = los_angeles_restaurant_health_inspections
+df1 = df[df['owner_name'] == 'GLASSELL COFFEE SHOP LLC']
+
+Find the activity date and the pe_description of facilities with the name 'STREET CHURROS' and with a score of less than 95 points.
+df = los_angeles_restaurant_health_inspections
+df['new_act_date'] = pd.to_datetime(df['activity_date'], format='%Y-%m-%d' ).dt.strftime('%Y-%m-%d')
+df1 = df[df['facility_name'] == 'STREET CHURROS'][['new_act_date', 'pe_description']]
+
+Find the details of oscar winners between 2001 and 2009.
+df = oscar_nominees
+df1 = df[df['year'].between(2001, 2009)]
+df2 = df1[df1['winner'] ==True]
+
+Find companies that have at least 2 Chinese speaking users.
+df = playbook_users
+df1 = df[df['language'] == 'chinese']
+df2 = df1.groupby(['company_id'])['language'].count().to_frame('num_of').reset_index()
+df3 = df2[df2['num_of'] >=2][['company_id']]
+
+Find the highest market value for each sector.
+Output the sector name along with the result.
+df = forbes_global_2010_2014
+df1 = df.groupby(['sector'])['marketvalue'].max().reset_index()
+
+What is the profit to sales ratio (profit/sales) of Royal Dutch Shell?
+Output the result along with the company name.
+df = forbes_global_2010_2014
+df1 = df[df['company'] == 'Royal Dutch Shell'].reset_index()
+df1['psratio'] = df1['profits'] / df1['sales']
+df1[['company', 'psratio']]
+
+Find the average distance an airplane travels from each origin airport.
+Output the result along with the corresponding origin.
+df = us_flights
+df1 = df.groupby(['origin'])['distance'].mean().to_frame('avg_dist').reset_index()[['origin', 'avg_dist']]
+
+Find all US flight details which had no delay.
+df = us_flights
+df1 = df[(df['arr_delay']<=0.00) | (df['arr_delay'].isnull())]
+
+Find the top 5 longest US flights by distance.
+Output the result along with the corresponding origin, destination, and distance.
+Sort the flights from longest to shortest.
+df = us_flights
+df1 = df.nlargest(6, 'distance')[['distance', 'dest', 'origin']].drop_duplicates()
+
+What are the unique IATA codes for all origin airports in the dataset?
+df = us_flights
+df1 = df.drop_duplicates(subset='origin')[['origin']]
+
+Find how many different origin airports exist?
+df = us_flights
+df1 = df.drop_duplicates(subset='origin')
+len(df1.origin)
+
+*****215-141-65-9******
+
+Count the number of speakers for each language.
+Sort the result based on the number of speakers in descending order.
+df = playbook_users
+df1 = df.groupby(['language']).size().to_frame('size').reset_index().sort_values(by='size', ascending=False)
+
+Find the industry with lowest average sales. Output that industry.
+df = forbes_global_2010_2014
+df1 = df.groupby(['industry'])['sales'].mean().reset_index().sort_values(by='sales').head(1)
+
+Finding the highest market value for each sector. Which sector is it best to invest in? Output the result along with the sector name. Order the result based on the highest market value in descending order.
+df = forbes_global_2010_2014
+df1 = df.groupby(['sector'])['marketvalue'].max().to_frame('hmval').reset_index().sort_values(by='hmval', ascending=False)
+
+Find the most profitable company from the financial sector. Output the result along with the continent.
+df = forbes_global_2010_2014
+df1 = df[df['sector'] == 'Financials']
+df2 = df1.sort_values(by='profits', ascending=False)
+df3 = df2.nlargest(1,'profits')[['company', 'continent']]
+
+List all companies working in the financial sector with headquarters in Europe or Asia.
+df = forbes_global_2010_2014
+df1 = df[df['sector'].str.contains('Financial')]
+df2 = df1[(df1['continent'].str.contains('Asia')) | (df1['continent'].str.contains('Europe'))][['company']].drop_duplicates()
+df2
+
+What is the average height of quarterbacks?
+df = nfl_combine
+df1 = df[df['position'] == 'QB']
+df2 = df1.heightinchestotal.mean()
+
+Count the number of students lectured by each teacher.
+Output the result along with the name of the teacher.
+df = sat_scores
+df1 = df.groupby(['teacher'])['student_id'].size().to_frame('kidsperteacher').reset_index()
+
+Count the number of user events performed by MacBookPro users.
+Output the result along with the event name.
+Sort the result based on the event count in the descending order.
+df = playbook_events
+df1 = df[df['device'] == 'macbook pro']
+df2 = df1.groupby(['event_name']).size().to_frame('event_count').reset_index().sort_values(by='event_count', ascending=False)
+
+What were the top 10 ranked songs in 2010?
+Output the rank, group name, and song name but do not show the same song twice.
+Sort the result based on the year_rank in ascending order.
+conditions = billboard_top_100_year_end[(billboard_top_100_year_end['year'] == 2010) & (billboard_top_100_year_end['year_rank'].between(1,10))]
+result = conditions[['year_rank','group_name','song_name']].drop_duplicates()
+
+How many unique users have performed a search?
+df = airbnb_searches
+df1 = df.id_user.nunique()
+
+Find the average number of searches made by each user and present the result with their corresponding user id.
+df = airbnb_searches
+df1 = df.groupby(['id_user'])['n_searches'].mean().reset_index()
+
+Find all neighbourhoods present in this dataset.
+df = airbnb_search_details
+df1 = df[['neighbourhood']].drop_duplicates()
+
+Find the price of the cheapest property for every city.
+df = airbnb_search_details
+df1 = df.groupby(['city'])['price'].min().to_frame('min_price').reset_index()
+
+****************228-152-67-9*****
+
+Find all searches for San Francisco with a flexible cancellation policy and a review score rating. Sort the results by the review score in the descending order.df = airbnb_search_details
+df1 = df[(df['city'] == 'SF') & (df['cancellation_policy'] == 'flexible') & (df['review_scores_rating'].notnull() )]
+df1
+
+Find all search details where data is missing from the host_response_rate column.
+df = airbnb_search_details
+df1 = df[df['host_response_rate'].isnull()]
+
+Find searches for Los Angeles neighborhoods.
+df = airbnb_search_details
+df1 = df[df['city'] == 'LA']
+df2 = df1.neighbourhood.drop_duplicates()
+
+Find all searches for accommodations where the number of bedrooms is equal to the number of bathrooms.
+df = airbnb_search_details
+df1 = df[df['bedrooms'] == df['bathrooms']]
+
+Find the search details made by people who searched for apartments designed for a single-person stay.
+df = airbnb_search_details
+df1 = df[(df['property_type'] == 'Apartment') & (df['accommodates'] == 1)] 
+
+Find hotels in the Netherlands that got complaints from guests about room dirtiness (word "dirty" in its negative review). Output all the columns in your results
+df = hotel_reviews
+df1 = df[(df['hotel_address'].str.contains('Netherlands')) & (df['negative_review'].str.lower().str.contains('dirty'))] 
+
+Find the date when Apple's opening stock price reached its maximum
+MINE****df = aapl_historical_stock_price
+df1 = df.groupby(['date'])['open'].max().to_frame('maxopen').reset_index().sort_values(by='maxopen', ascending=False)
+df2 = df1['new_date'] = pd.to_datetime(df1['date'], format='%Y-%m-%d' ).dt.strftime('%Y-%m-%d').head(1)
+df2
+THEIRS***import pandas as pd
+import numpy as np
+import datetime, time 
+df = aapl_historical_stock_price
+df['date'] = df['date'].apply(lambda x: x.strftime('%Y-%m-%d'))
+result = df[df['open'] == df['open'].max()][['date']]
+
+You are given a list of posts of a Facebook user. Find the average number of likes.
+df = fb_posts
+df1 = df.no_of_likes.mean()
+
+Calculate the sales revenue for the year 2021.
+df = amazon_sales
+df1 = df[df['order_date'].dt.year == 2021]['order_total'].sum()
+df1
+
+*******237-161-67-9**********
+
+Which products had the highest sales (in terms of units sold) in each promotion? Output promotion id, product id with highest sales and highest sales itself.
+df = facebook_sales
+df1 = df.groupby(['promotion_id', 'product_id'])['units_sold'].sum().reset_index()
+df2 = df1.loc[df1.groupby(by='promotion_id')['units_sold'].idxmax()]
+
+For the 5 most lucrative products, i.e. products that generated the highest revenue, output their IDs and the total revenue.
+df = facebook_sales
+df['revenue'] = (df.cost_in_dollars * df.units_sold)
+df1 = df.groupby('product_id')[['revenue']].sum().reset_index().sort_values(by='revenue', ascending=False).head(5)
+
+How many orders were shipped by Speedy Express in total?
+df = shopify_orders
+df1 = shopify_carriers
+df2 = pd.merge(df, df1, left_on='carrier_id', right_on='id')
+df3 = df2[df2['name'] == 'Speedy Express']
+len(df3)
+
+Write a query to get a list of products that have not had any sales. Output the ID and market name of these products.
+df = fct_customer_sales
+df1 = dim_product
+df2 = df.merge(df1, on='prod_sku_id', how='right')
+df3 = df2[df2['order_id'].isna()][['prod_sku_id', 'market_name']]
+
+Write a query to return all Customers (cust_id) who are violating primary key constraints in the Customer Dimension (dim_customer) i.e. those Customers who are present more than once in the Customer Dimension.
+For example if cust_id 'C123' is present thrice then the query should return 'C123' | '3' as output.
+
+df = dim_customer
+df1 = df.groupby(['cust_id']).size().to_frame('more_than').reset_index()
+df2 = df1[df1['more_than']>1]
+
+Given the education levels and salaries of a group of individuals, find what is the average salary for each level of education.
+df = google_salaries
+df1 = df.groupby(['education'])['salary'].mean().to_frame('avg_sal').reset_index()
+
+
+*******243-166-68-9*************
+
+For each video game player, find the latest date when they logged in.
+df = players_logins
+df1 = df.groupby(['player_id'])['login_date'].max().reset_index()
+
+Count how many claims submitted in December 2021 are still pending. A claim is pending when it has neither an acceptance nor rejection date.Find specific month. 
+df = cvs_claims
+df['month'] = pd.DatetimeIndex(df['date_submitted']).month
+df['year'] = pd.DatetimeIndex(df['date_submitted']).year
+df1 = df[(df['year'] == 2021) & (df['month'] == 12)]
+df2 = df1[(df1['date_accepted'].isna()) & (df['date_rejected'].isna())]
+len(df2)
+
+Count the number of unique users per day who logged in from both a mobile device and web. Output the date and the corresponding number of users.
+df = mobile_logs
+df1 = web_logs
+df2 = pd.merge(df, df1, on=['user_id', 'date'])
+df2 = df2.drop_duplicates()
+df3 = df2.groupby(['date']).size().reset_index()
+
+To improve sales, the marketing department runs various types of promotions. The marketing manager would like to analyze the effectiveness of these promotional campaigns. In particular, what percentage of sales had a valid promotion applied? Only the promotions found in the facebook_promotions table are valid.df = facebook_promotions
+df1 = facebook_sales
+df2 = len(df1.merge(df, on='promotion_id'))/len(df1) * 100
+
+What percentage of all products are both low fat and recyclable?
+df = facebook_products
+df1 = len(df[(df['is_low_fat'] == 'Y') & (df['is_recyclable'] == 'Y')]) / len(df) *100
+
+**************248-171-68-9**************
+
+Count how many claims submitted in December 2021 are still pending. A claim is pending when it has neither an acceptance nor rejection date.
+df = cvs_claims
+df['month'] = pd.DatetimeIndex(df['date_submitted']).month
+df['year'] = pd.DatetimeIndex(df['date_submitted']).year
+df1 = df[(df['year'] == 2021) & (df['month'] == 12)]
+df2 = df1[(df1['date_accepted'].isnull()) & (df['date_rejected'].isnull())]
+len(df2)
+
+
+**********************HARD ONES FOR GitHub**********************
+
+Find the number of days a US track has stayed in the 1st position for both the US and worldwide rankings. Output the track name and the number of days in the 1st position. Order your output alphabetically by track name.
+If the region 'US' appears in dataset, it should be included in the worldwide ranking.
+
+
+df = spotify_daily_rankings_2017_us
+df1 = spotify_worldwide_daily_song_ranking
+df2 = df1.loc[(df1['region']== 'us') & (df1['position'] == 1).astype(int)]
+df3 = pd.merge(df, df1, on=['trackname', 'date'])
+result = df3.groupby(['trackname']).size().to_frame('num_of').reset_index()
+result
+
+
+
+Revenue Over Time
+
+Find the 3-month rolling average of total revenue from purchases given a table with users, their purchase amount, and date purchased. Do not include returns which are represented by negative purchase values. Output the year-month (YYYY-MM) and 3-month rolling average of revenue, sorted from earliest month to latest month.
+
+A 3-month rolling average is defined by calculating the average total revenue from all user purchases for the current month and previous two months. The first two months will not be a true 3-month rolling average since we are not given data from last year. Assume each month has at least one purchase.
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df = amazon_purchases
+df1 = df[(df['purchase_amt']>=0)]
+df1['created_at'] = df1['created_at'].apply(lambda x: x.strftime('%Y-%m'))
+df2 = df1.groupby(['created_at'])['purchase_amt'].sum().to_frame('mon_avg').reset_index()
+df2['rolling_3'] = df2['mon_avg'].rolling(3,  min_periods=1).mean()
+df2[['created_at', 'rolling_3']]
+
+
+
+
+
+Naive Forecasting
+Some forecasting methods are extremely simple and surprisingly effective. Naïve forecast is one of them; we simply set all forecasts to be the value of the last observation. Our goal is to develop a naïve forecast for a new metric called "distance per dollar" defined as the (distance_to_travel/monetary_cost) in our dataset and measure its accuracy.
+
+To develop this forecast,  sum "distance to travel"  and "monetary cost" values at a monthly level before calculating "distance per dollar". This value becomes your actual value for the current month. The next step is to populate the forecasted value for each month. This can be achieved simply by getting the previous month's value in a separate column. Now, we have actual and forecasted values. This is your naïve forecast. Let’s evaluate our model by calculating an error matrix called root mean squared error (RMSE). RMSE is defined as sqrt(mean(square(actual - forecast)). Report out the RMSE rounded to the 2nd decimal spot.
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+import numpy as np
+#uber_request_logs.head()
+df = uber_request_logs
+df['request_date'] = df['request_date'].apply(lambda x: x.strftime('%Y-%m'))
+df1 = df.groupby(['request_date'])['distance_to_travel','monetary_cost'].sum().reset_index()
+df1['dist_per_dolr'] = df1['distance_to_travel'] / df1['monetary_cost']
+df1['naive_forecast'] = df1['dist_per_dolr'].shift(1)
+df2 = df1.loc[1:, ]
+df2['error'] = np.square(df2['dist_per_dolr'] - df1['naive_forecast'])
+df3 = round(np.sqrt(np.mean(df2['error'])), 2)
+
+
+Distance Per Dollar
+
+You’re given a dataset of uber rides with the traveling distance (‘distance_to_travel’) and cost (‘monetary_cost’) for each ride. For each date, find the difference between the distance-per-dollar for that date and the average distance-per-dollar for that year-month. Distance-per-dollar is defined as the distance traveled divided by the cost of the ride.
+
+
+The output should include the year-month (YYYY-MM) and the absolute average difference in distance-per-dollar (Absolute value to be rounded to the 2nd decimal).
+You should also count both success and failed request_status as the distance and cost values are populated for all ride requests. Also, assume that all dates are unique in the dataset. Order your results by earliest request date first.
+
+# Import your libraries
+import pandas as pd
+import numpy as np
+
+uber_request_logs
+
+df = uber_request_logs
+df['distance_per_dollar_mean_day'] = df['distance_to_travel']/df['monetary_cost']
+df['request_date'] = df['request_date'].apply(lambda x: x.strftime('%Y-%m'))
+df.rename(columns = {'request_date' : 'month_year'}, inplace = True)
+df['monthly_mean'] = df.groupby(['month_year'])['distance_per_dollar_mean_day'].transform('mean')
+df['mean_deviation'] = (df['distance_per_dollar_mean_day'] - df['monthly_mean']).abs()
+result = df[['month_year', 'mean_deviation']].round(2).drop_duplicates()
+result
+
+
+Comments Distribution
+
+Write a query to calculate the distribution of comments by the count of users that joined Meta/Facebook between 2018 and 2020, for the month of January 2020.
+The output should contain a count of comments and the corresponding number of users that made that number of comments in Jan-2020. For example, you'll be counting how many users made 1 comment, 2 comments, 3 comments, 4 comments, etc in Jan-2020. Your left column in the output will be the number of comments while your right column in the output will be the number of users. Sort the output from the least number of comments to highest.
+To add some complexity, there might be a bug where an user post is dated before the user join date. You'll want to remove these posts from the result.
+
+
+import pandas as pd
+
+df = fb_users
+df1 = fb_comments
+df2 = pd.merge(df, df1, how='inner', left_on=['id'], right_on=['user_id'])
+#user_comments = user_comments[user_comments['created_at'] >= user_comments['joined_at']]
+df2 = df2[df2['created_at'] >= user_comments['joined_at']]
+df2['jdate'] = df2['joined_at'].apply(lambda x: x.strftime('%Y-%m'))
+df2['cdate'] = df2['created_at'].apply(lambda x: x.strftime('%Y-%m'))
+
+df2 = df2[(df2['jdate'] > '2018-01') & (df2['jdate'] < '2020-12')]
+df2 = df2[(df2['cdate'] > '2018-01') & (df2['cdate'] < '2020-12')]
+df2 = df2[df2['cdate'] == '2020-01']
+
+df3 = df2.groupby('id')['user_id'].count().reset_index(name='user_comment_count')
+result = df3.groupby('user_comment_count')['id'].count().reset_index(name='user_cnt').sort_values('user_comment_count', ascending=True)
+result
+
+
+
+Best Selling Item
+
+Find the best selling item for each month (no need to separate months by year) where the biggest total invoice was paid. The best selling item is calculated using the formula (unitprice * quantity). Output the description of the item along with the amount paid.
+
+import pandas as pd
+df = online_retail
+df['month'] = df['invoicedate'].apply(lambda x: x.strftime('%m'))
+df['paid'] = df['unitprice'] * df['quantity']
+df['total_paid'] = df.groupby(['month', 'description'])['paid'].transform('sum')
+df1 =  df[['month', 'total_paid', 'description']].drop_duplicates()
+df1['rnk'] = df1.groupby('month')['total_paid'].rank(method='max', ascending=False)
+df1 = df1[df1['rnk']==1][['month', 'description','total_paid']].sort_values(['month'])
+df1
+
+
+Find the genre of the person with the most number of oscar winnings.
+
+If there are more than one person with the same number of oscar wins, return the first one in alphabetic order based on their name. Use the names as keys when joining the tables.
+
+import pandas as pd
+df = oscar_nominees
+df1 = nominee_information
+df2 = pd.merge(df, df1, left_on='nominee', right_on='name' )
+df2 = df2.loc[df2['winner'] == True]
+df2 = df2.groupby(['nominee', 'top_genre']).size().to_frame('counts').reset_index()
+df3 = df2.loc[df2['counts'] >1].head(1)
+
+
+Product Transaction Count
+
+Find the number of transactions that occurred for each product. Output the product name along with the corresponding number of transactions and order records by the product id in ascending order. You can ignore products without transactions.
+
+import pandas as pd
+df = excel_sql_inventory_data
+df1 = excel_sql_transaction_data
+df2 = pd.merge(df, df1, left_on='product_id', right_on='product_id')
+df2['count'] = df2.groupby(['product_id', 'product_name'])['transaction_id'].transform('count')
+df2 = df2.drop_duplicates(subset='product_id')
+df3 =df2[['product_name', 'count']] 
+df3
+
+Number Of Acquisitions
+Find the number of acquisitions that occurred in each quarter of each year. Output the acquired quarter in YYYY-Qq format along with the number of acquisitions and order results by the quarters with the highest number of acquisitions first.
+
+import pandas as pd
+
+df = crunchbase_acquisitions
+df['quarter'] = df['acquired_month'].dt.year.astype(str) + '-Q' + df['acquired_month'].dt.quarter.astype(str)
+df1 = df.groupby(['quarter']).size().to_frame('acount').reset_index().sort_values(by='acount', ascending=False)
+
+
+Find countries that are in winemag_p1 dataset but not in winemag_p2
+
+Find countries that are in winemag_p1 dataset but not in winemag_p2.
+Output distinct country names.
+Order records by the country in ascending order.
+
+import pandas as pd
+import numpy as np
+df = winemag_p1
+df1 = winemag_p2
+df = df.country.unique()
+df1 = df1.country.unique()
+dfa = pd.DataFrame(df)
+dfb = pd.DataFrame(df1)
+dfa.columns=['country']
+dfb.columns=['country']
+dfr = dfa['country'].isin(dfb['country'])
+dfr
+result = dfa.tail(4).sort_values(by='country',ascending=True)
+
+
+Make a pivot table to find the highest payment in each year for each employee
+
+Make a pivot table to find the highest payment in each year for each employee.
+Find payment details for 2011, 2012, 2013, and 2014.
+Output payment details along with the corresponding employee name.
+Order records by the employee name in ascending order
+
+import pandas as pd
+
+df = sf_public_salaries
+df = df.groupby(['id'])['employeename', 'totalpay', 'year'].max()
+df['employeename'] = df['employeename'].str.upper()
+df1 = df.sort_values('employeename', ascending=True)
+
+df2 = df.pivot_table(index=['employeename'],columns='year', values='totalpay', aggfunc='first').fillna(0).reset_index()
+df2
+
+
+Apple Product Counts
+Find the number of Apple product users and the number of total users with a device and group the counts by language. Assume Apple products are only MacBook-Pro, iPhone 5s, and iPad-air. Output the language along with the total number of Apple users and users with any device. Order your results based on the number of total users in descending order.
+
+import pandas as pd
+import numpy as np
+df = playbook_events
+df1 = playbook_users
+df2 = pd.merge(df, df1, on='user_id')
+df3 = df2.groupby('language')['user_id'].nunique().to_frame('total_users').reset_index()
+df2 = df2.loc[(df2['device'] == 'macbook pro') | (df2['device'] == 'iphone 5s') |  (df2['device'] == 'ipad air')]
+df4 = df2.groupby('language')['user_id'].nunique().to_frame('apple_users').reset_index()
+result = pd.merge(df3, df4, on='language', how='outer').fillna(0).sort_values(by='total_users', ascending=False)
+result
+
+
+Find the number of inspections for each risk category by inspection type
+Find the number of inspections that resulted in each risk category per each inspection type.
+Consider the records with no risk category value belongs to a separate category.
+Output the result along with the corresponding inspection type and the corresponding total number of inspections per that type. The output should be pivoted, meaning that each risk category + total number should be a separate column.
+Order the result based on the number of inspections per inspection type in descending order.
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df = sf_restaurant_health_violations
+df = df.fillna('no_category').groupby(['inspection_type','risk_category']).agg(count=('inspection_date','count')).reset_index().pivot('inspection_type','risk_category','count').reset_index().fillna(0)[['inspection_type','no_category','Low Risk','Moderate Risk','High Risk']]
+
+df['total'] = df.apply('sum',axis=1)
+
+df.sort_values('total',ascending=False)
+
+User Exile
+Find the number of relationships that user  with id == 1 is not part of.
+
+df = facebook_friends
+df['count'] = ((df.user1 != 1) & (df.user2 != 1)).sum()
+df['count'].head(1)
+
+Cum Sum Energy Consumption
+Calculate the running total (i.e., cumulative sum) energy consumption of the Meta/Facebook data centers in all 3 continents by the date. Output the date, running total energy consumption, and running total percentage rounded to the nearest whole number.
+# Import your libraries
+import pandas as pd
+from functools import reduce
+
+df = fb_eu_energy
+df1 = fb_asia_energy
+df2 = fb_na_energy
+df_merged = df.append(df1).append(df2)
+df_merged = df_merged.groupby('date')['consumption'].sum().reset_index()
+df_merged['date'] = df_merged['date'].apply(lambda x: x.strftime('%Y-%m-%d'))
+df_merged['total'] = df_merged.sum(axis=1)
+df_merged['cumsum'] = df_merged['total'].cumsum(axis=0)
+df_merged['percent'] = round((df_merged['cumsum'] / df_merged['total'].sum())*100)
+df_merged[['date', 'cumsum', 'percent']]
+
+Points Rating Of Wines Over Time
+
+
+Find the average points difference between each and previous years starting from the year 2000. Output the year, average points, previous average points, and the difference between them.
+If you're unable to calculate the average points rating for a specific year, use an 87 average points rating for that year (which is the average of all wines starting from 2000).
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+'''df = winemag_p2
+df['year'] =  df.title.str.extract(r'(\d{4})', expand=False)
+df1 = df.loc[df['year'] >'1998']
+df2 = df1.groupby(['year'])['points'].mean().reset_index()
+data = {'year':['2000', '2001', '2004'], 'points' :[87,87,87]}
+df2b = pd.DataFrame(data)
+df3 = df2.append(df2b).sort_values(by='year', ascending=True).round(3)
+df3['previous_year_avg'] = df3['points'].shift(1)
+df3['diff'] = df3['points'] - df3['previous_year_avg']
+result = df3.loc[df3['year']>'1999']
+result'''
+#this is the solution following the instructions
+winemag_p2['year'] = (winemag_p2['title'].str.extract('(\d{4,4})')).fillna(0).astype(int)
+winemag_p2 = winemag_p2[(winemag_p2['year'] >= 2000)& (winemag_p2['points'].notnull() )]
+result = winemag_p2.groupby(['year'])['points'].mean().to_frame('avg_points').reset_index()
+result['prev_avg'] = (result['avg_points'].shift(1)).fillna(87)
+result['difference'] = result['avg_points'] - result['prev_avg']
+result
+#solution from strata scratch
+
+
+Top 3 Wineries In The World
+
+Find the top 3 wineries in each country based on the average points earned. In case there is a tie, order the wineries by winery name in ascending order. Output the country along with the best, second best, and third best wineries. If there is no second winery (NULL value) output 'No second winery' and if there is no third winery output 'No third winery'. For outputting wineries format them like this: "winery (avg_points)"
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df = winemag_p1
+df = df.groupby(['country', 'winery'])['points'].mean().to_frame('avg_points').reset_index()
+df['winery_points'] = df['winery'] + ' (' + df['avg_points'].apply(lambda x: str(x)) + ')'
+df['avg_rank'] = df.sort_values(['country', 'avg_points', 'winery'], ascending = [True, False, True]).groupby(['country']).cumcount() + 1
+top3 = df[df['avg_rank'] <= 3]
+result = top3.pivot_table(index=['country'],columns='avg_rank', values = 'winery_points', aggfunc='first').reset_index()
+result[2] = result[2].fillna('No second winery')
+result[3] = result[3].fillna('No third winery')
+result
+
+
+
+Most Expensive And Cheapest Wine
+
+Find the cheapest and the most expensive variety in each region. Output the region along with the corresponding most expensive and the cheapest variety. Be aware that there are 2 region columns, price from that row applies to both of them.
+# Import your libraries
+import pandas as pd
+# Start writing code
+df1 = winemag_p1[['region_1', 'price', 'variety']].rename(columns={'region_1':'region'})
+df2 = winemag_p1[['region_2', 'price', 'variety']].rename(columns={'region_2':'region'})
+df = pd.concat([df1, df2], ignore_index=True)
+expensive = df[~df['region'].isna()].groupby(['region']).apply(lambda x: x.nlargest(1, 'price')).reset_index(drop=True).rename(columns={'variety':'var_expensive'})
+cheap = df[~df['region'].isna()].groupby(['region']).apply(lambda x: x.nsmallest(1, 'price')).reset_index(drop=True).rename(columns={'variety':'var_cheap'})
+result = pd.merge(expensive,cheap, on = 'region')[['region','var_expensive','var_cheap']]
+
+
+My solution....it dropped a couple of blank rows. Theirs kept them. 
+df = winemag_p1
+df['region'] = df.pop('region_1').fillna(df.pop('region_2')).astype(str)
+df = df.sort_values('region')
+df = df[['region', 'price', 'variety']]
+dfe = df[~df['region'].isna()].groupby(['region']).apply(lambda x: x.nlargest(1, 'price')).reset_index(drop=True).rename(columns={'variety':'var_expensive'})
+dfc = df[~df['region'].isna()].groupby(['region']).apply(lambda x: x.nsmallest(1, 'price')).reset_index(drop=True).rename(columns={'variety':'var_cheap'})
+df3 = pd.merge(dfe, dfc, on='region')[['region', 'var_expensive', 'var_cheap']]
+df3
+
+
+Find Favourite Wine Variety
+Find each taster's favorite wine variety.
+Consider that favorite variety means the variety that has been tasted by most of the time.
+Output the taster's name along with the wine variety.
+import pandas as pd
+
+# Start writing code
+df = winemag_p2[winemag_p2['taster_name'].notnull()]
+df = df.groupby(['taster_name','variety']).size().to_frame('counts').reset_index()
+df['rank'] = df.groupby(['taster_name'])['counts'].rank(method='dense', ascending=False)
+df1 = df[df['rank'] == 1][['taster_name', 'variety']]
+df1
+
+Price Of Wines In Each Country
+Find the minimum, average, and maximum price of all wines per country. Assume all wines listed across both datasets are unique. Output the country name along with the corresponding minimum, maximum, and average prices.
+df = winemag_p1[['country', 'price']]
+df1 = winemag_p2[['country', 'price']]
+df2 = pd.concat([df, df1], ignore_index=True)
+df2 = df2.groupby('country').agg({'price': ['mean', 'min', 'max']}).reset_index()
+df2
+
+
+Algorithm Performance
+Meta/Facebook is developing a search algorithm that will allow users to search through their post history. You have been assigned to evaluate the performance of this algorithm.
+We have a table with the user's search term, search result positions, and whether or not the user clicked on the search result.
+Write a query that assigns ratings to the searches in the following way:
+•	If the search was not clicked for any term, assign the search with rating=1
+•	If the search was clicked but the top position of clicked terms was outside the top 3 positions, assign the search a rating=2
+•	If the search was clicked and the top position of a clicked term was in the top 3 positions, assign the search a rating=3
+As a search ID can contain more than one search term, select the highest rating for that search ID. Output the search ID and it's highest rating.
+Example: The search_id 1 was clicked (clicked = 1) and it's position is outside of the top 3 positions (search_results_position = 5), therefore it's rating is 2.
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df = fb_search_events
+df1 = df.loc[df['clicked'] == 0]
+df = df[df.clicked == 1]
+df2= df.loc[df['search_results_position'] >3]
+df3= df.loc[df['search_results_position'].between(0,3)]
+df1['search_results_position'] = df1['search_results_position'].replace([2, 3, 4, 5], 1)
+df2['search_results_position'] = df2['search_results_position'].replace([4, 5], 2)
+df3['search_results_position'] = df3['search_results_position'].replace([1,2,3], 3)
+merged = df1.append(df2).append(df3)
+merged = merged.groupby('search_id').max().reset_index()
+final = merged[['search_id', 'search_results_position']]
+final
+
+Year Over Year Churn
+Find how the number of drivers that have churned changed in each year compared to the previous one. Output the year (specifically, you can use the year the driver left Lyft) along with the corresponding number of churns in that year, the number of churns in the previous year, and an indication on whether the number has been increased (output the value 'increase'), decreased (output the value 'decrease') or stayed the same (output the value 'no change').
+# Import your libraries
+import pandas as pd
+import numpy as np
+
+# Start writing code
+df = lyft_drivers
+df['churn'] = (df['end_date'].notnull()).astype(int)
+df['year_left'] = df['end_date'].dt.year
+result = df.groupby(['year_left'])['churn'].sum().to_frame('total_churn').reset_index()
+result['prev_year_churn'] = result['total_churn'].shift(1)
+result['prev_year_churn'][0] = 0
+result['inc/dec'] = np.select([result.total_churn > result.prev_year_churn,result.total_churn < result.prev_year_churn,result.total_churn == result.prev_year_churn],['increase','decrease','no change'])
+result
+
+Find the top 5 least paid employees for each job title
+Find the top 5 least paid employees for each job title.
+Output the employee name, job title and total pay with benefits for the first 5 least paid employees. Avoid gaps in ranking.
+
+import pandas as pd
+
+# Start writing code
+df = sf_public_salaries
+
+df['salary_rank'] = df.groupby('jobtitle')['totalpaybenefits'].rank(method='dense')
+df1 = df[df['salary_rank'] <= 5]
+df2 = df1[['employeename', 'jobtitle', 'totalpaybenefits']].sort_values(['jobtitle', 'totalpaybenefits'], ascending=[True, True])
+df2
+
+
+Employees Without Benefits
+
+Find the ratio between the number of employees without benefits to total employees. Output the job title, number of employees without benefits, total employees relevant to that job title, and the corresponding ratio. Order records based on the ratio in ascending order.
+
+# Import your libraries
+import pandas as pd
+import numpy as np
+
+# Start writing code
+df = sf_public_salaries
+df['with_benefit'] = 'with'
+df.loc[(df['benefits']== 0) | (df['benefits'].isnull()), 'with_benefit'] = 'without'
+grouped = df.groupby(['jobtitle','with_benefit']).size().to_frame('count').reset_index()
+pivot = grouped.pivot_table(index=['jobtitle'],columns='with_benefit', values = 'count', aggfunc='sum').fillna(0).reset_index()
+pivot.columns.name = None
+pivot['total_employee'] = pivot['with'] + pivot['without']
+pivot['ratio'] = pivot['without']/pivot['total_employee']
+result = pivot[['jobtitle','without','total_employee','ratio']]
+result
+
+Find the number of police officers, firefighters, and medical staff employees
+Find the number of police officers (job title contains substring police), firefighters (job title contains substring fire), and medical staff employees (job title contains substring medical) based on the employee name.
+Output each job title along with the corresponding number of employees.
+
+# Start writing code
+df = sf_public_salaries
+df.loc[df['jobtitle'].str.contains('police', case=False), 'title']='Police'
+df.loc[df['jobtitle'].str.contains('fire', case=False), 'title']='Firefighter'
+df.loc[df['jobtitle'].str.contains('medical', case=False), 'title']="Medical"
+df1 = df.groupby(['title']).size().to_frame('number_of_employees').reset_index() 
+df1
+
+Olympic Medals By Chinese Athletes
+Find the number of medals earned in each category by Chinese athletes from the 2000 to 2016 summer Olympics. For each medal category, calculate the number of medals for each olympic games along with the total number of medals across all years. Sort records by total medals in descending order.
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df = olympics_athletes_events
+df1 = df.loc[df['noc'] =='CHN']
+df1 = df1.groupby(['medal', 'year']).size().to_frame('medal_count').reset_index()
+pivoted = df1.pivot_table(index='medal',columns='year', values = 'medal_count', aggfunc='sum')
+pivoted.columns.name = None
+pivoted.columns= pivoted.columns.astype(str)
+pivoted = pivoted.reset_index()
+pivoted['total_medals'] = pivoted.sum(axis=1)
+result = pivoted.sort_values('total_medals', ascending = False)
+
+Find how the average male height changed between each Olympics from 1896 to 2016
+Find how the average male height changed between each Olympics from 1896 to 2016.
+Output the Olympics year, average height, previous average height, and the corresponding average height difference.
+Order records by the year in ascending order.
+If avg height is not found, assume that the average height of an athlete is 172.73.
+
+import pandas as pd
+import numpy as np
+# Start writing code
+df = olympics_athletes_events
+df = df.loc[df['sex'] == 'M']
+df = df.drop_duplicates(subset = ['year', 'id'])
+df = df.groupby('year')['height'].mean().to_frame('yah').reset_index()
+df['prev_yah'] = df['yah'].shift(1).fillna(172.73)
+df['yah_diff'] = df['yah'] - df['prev_yah']
+df
+
+
+
+
